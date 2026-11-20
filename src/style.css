@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+/* ---------- Fonts
+   seanthorne.co.uk's faces, self-hosted (OFL, licences in public/fonts) so the
+   app makes no third-party requests. Variable files: one per family per subset
+   covers every weight. */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Martian Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("/fonts/martian-mono-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Martian Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("/fonts/martian-mono-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---------- Tokens
+   The seanthorne.co.uk palettes. A different one on every visit, stepping through
+   all seven in turn: the script in index.html's <head> sets <html data-palette>
+   before first paint. Each palette names five colours; everything else is derived
+   from them, so a new palette only needs those five.
+   - `bg` page, `ink` text, `highlight` the marker, `live` the accent,
+     `danger` errors (kept apart in hue from that palette's accent).
+   - `surface`, `muted`, `rule`, `control` are mixes of ink into bg. On light
+     palettes the surface is lighter than the page; on dark ones, a touch of ink.
+   - `code-string` is the accent and `code-literal` is danger.
+   Every palette clears: ink on bg and surface 7:1; muted, live and danger on bg
+   and surface 4.5:1; ink on highlight 4.5:1; control on bg and surface 3:1.
+   Check a new palette against all of these before adding it. */
+
+:root, [data-palette="0"] {
+  /* 0 Peach: cream, navy, pink marker, burnt orange */
+  color-scheme: light;
+  --bg: #fff1e0;
+  --ink: #1b1b3a;
+  --highlight: #ffb3c7;
+  --live: #c2410c;
+  --danger: #b0123e;
+
+  --surface: color-mix(in srgb, #fff 50%, var(--bg));
+  --muted: color-mix(in srgb, var(--ink) 74%, var(--bg));
+  --rule: color-mix(in srgb, var(--ink) 14%, var(--bg));
+  --control: color-mix(in srgb, var(--ink) 60%, var(--bg));
+  --code-string: var(--live);
+  --code-literal: var(--danger);
+}
+
+/* 1 Mint: mint, forest green, sunflower marker, raspberry */
+[data-palette="1"] { --bg: #d6f5e3; --ink: #0b3d2e; --highlight: #ffd23f; --live: #b0154f; --danger: #b3261e; }
+/* 2 Night: midnight, cream, violet marker, coral */
+[data-palette="2"] { --bg: #14122b; --ink: #f5f1e8; --highlight: #5b3fd6; --live: #ff8a5b; --danger: #ff7fa3; }
+/* 3 Bubblegum: pink, plum, lemon marker, berry */
+[data-palette="3"] { --bg: #ffd6e8; --ink: #2a0f3d; --highlight: #fff07a; --live: #a3105f; --danger: #b3261e; }
+/* 4 Cobalt: electric blue, white, magenta marker, butter yellow */
+[data-palette="4"] { --bg: #1a2fd0; --ink: #ffffff; --highlight: #c8004f; --live: #ffe066; --danger: #ffb3c1; }
+/* 5 Lilac: lilac, ink violet, lime marker, red */
+[data-palette="5"] { --bg: #e4dbff; --ink: #1d1340; --highlight: #b6f36b; --live: #b0181b; --danger: #8f0f5c; }
+/* 6 Forest: deep green, parchment, rust marker, marigold */
+[data-palette="6"] { --bg: #0f2a20; --ink: #f2ecd8; --highlight: #b3360b; --live: #ffcf4a; --danger: #ff9a9a; }
+
+/* Mixed tokens again on every [data-palette] element, so a nested preview
+   (the theme picker cards) mixes from its own palette instead of the page's. */
+[data-palette] {
+  --surface: color-mix(in srgb, #fff 50%, var(--bg));
+  --muted: color-mix(in srgb, var(--ink) 74%, var(--bg));
+  --rule: color-mix(in srgb, var(--ink) 14%, var(--bg));
+  --control: color-mix(in srgb, var(--ink) 60%, var(--bg));
+  --code-string: var(--live);
+  --code-literal: var(--danger);
+}
+
+/* The dark palettes: native controls and scrollbars go dark, and the surface
+   lifts off the page with ink instead of white. */
+[data-palette="2"], [data-palette="4"], [data-palette="6"] {
+  color-scheme: dark;
+  --surface: color-mix(in srgb, var(--ink) 5%, var(--bg));
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-control: var(--control);
+  --color-live: var(--live);
+  --color-highlight: var(--highlight);
+  --color-danger: var(--danger);
+  /* Tree view values: strings in code-string (the accent); numbers, booleans and null in code-literal (danger) */
+  --color-code-string: var(--code-string);
+  --color-code-literal: var(--code-literal);
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Martian Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --radius-control: 3px;
+}
+
+/* Type scale: four UI sizes on round rem steps (14/16/20/24). */
+@theme {
+  --text-small: 0.875rem;      /* 14: captions, hints, metadata, small buttons */
+  --text-small--line-height: 1.375rem;
+  --text-body: 1rem;           /* 16: labels, buttons, everything else in the UI */
+  --text-body--line-height: 1.5rem;
+  --text-mark: 1.25rem;        /* 20: wordmark */
+  --text-mark--line-height: 1.75rem;
+  --text-entry: 1.5rem;        /* 24: primary single-value input */
+  --text-entry--line-height: 2rem;
+}
+
+/* ---------- Motion
+   Short, physical, and tied to something happening. Everything here is
+   switched off by the reduced-motion rule in base, and every keyframe animates
+   *from* a hidden state, so with motion off things simply appear. */
+@theme {
+  --animate-fall: fall 900ms both;
+  --animate-rise: rise 380ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  --animate-slide-down: slide-down 320ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  --animate-drop-in: drop-in 440ms cubic-bezier(0.25, 1.35, 0.5, 1) both;
+  --animate-arrive: drop-in 440ms cubic-bezier(0.25, 1.35, 0.5, 1) both, flash 1800ms ease-out;
+  --animate-pop: pop 280ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  --animate-beat: beat 2s ease-out infinite;
+  --animate-blink: blink 900ms ease-in-out infinite alternate;
+
+  /* The wordmark's full stop: falls, bounces twice, settles */
+  @keyframes fall {
+    0% { transform: translateY(-1.6em); opacity: 0; animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6); }
+    40% { transform: translateY(0); opacity: 1; animation-timing-function: cubic-bezier(0, 0.4, 0.5, 1); }
+    60% { transform: translateY(-0.35em); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6); }
+    76% { transform: translateY(0); animation-timing-function: cubic-bezier(0, 0.4, 0.5, 1); }
+    88% { transform: translateY(-0.1em); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+  @keyframes slide-down { from { opacity: 0; transform: translateY(-8px); } }
+  @keyframes drop-in { from { opacity: 0; transform: translateY(-14px); } }
+  /* Highlighter pass on new rows; side shadows widen it without moving the rules */
+  @keyframes flash {
+    from { background-color: var(--highlight); box-shadow: -12px 0 0 var(--highlight), 12px 0 0 var(--highlight); }
+  }
+  @keyframes pop { from { opacity: 0; transform: scale(0.85); } }
+  @keyframes beat {
+    from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 55%, transparent); }
+    70%, to { box-shadow: 0 0 0 6px transparent; }
+  }
+  @keyframes blink { to { opacity: 0.25; } }
+}
+
+/* ---------- Base */
+
+@layer base {
+  /* Page behind a full-screen dialog should not scroll */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  :focus-visible,
+  label:has(> input:focus-visible) {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}
+
+/* ---------- Components */
+
+@layer components {
+  /* Section label: sentence case, carries hierarchy by weight, not size */
+  .label {
+    @apply text-body font-semibold text-ink;
+  }
+
+  .caption {
+    @apply text-small text-muted;
+  }
+
+  .btn {
+    @apply inline-flex h-10 cursor-pointer items-center justify-center gap-2 rounded-control px-4 text-body font-semibold whitespace-nowrap transition-[color,background-color,border-color,scale] duration-150 select-none not-disabled:active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-45;
+  }
+  .btn-sm {
+    @apply h-8 px-3 text-small;
+  }
+  .btn-lg {
+    @apply h-12 px-5 text-body;
+  }
+  .btn-primary {
+    @apply bg-ink text-bg not-disabled:hover:bg-ink/85 not-disabled:active:bg-ink/75;
+  }
+  .btn-secondary {
+    @apply border border-control text-ink not-disabled:hover:border-ink not-disabled:hover:bg-ink/5 not-disabled:active:bg-ink/10;
+  }
+
+  /* Destructive actions such as Clear */
+  .btn-danger {
+    @apply border border-danger text-danger not-disabled:hover:bg-danger/10 not-disabled:active:bg-danger/15;
+  }
+
+  .field {
+    @apply rounded-control border border-control bg-surface text-ink transition-colors placeholder:text-muted hover:border-ink focus-visible:border-ink focus-visible:outline-offset-0;
+  }
+}

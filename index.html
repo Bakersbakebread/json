@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fff1e0" />
+  <title>json.seanthorne.co.uk</title>
+  <meta name="description" content="Format, check and explore JSON in your browser. Nothing is uploaded." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://json.seanthorne.co.uk/" />
+  <meta property="og:title" content="json.seanthorne.co.uk" />
+  <meta property="og:description" content="Format, check and explore JSON in your browser. Nothing is uploaded." />
+  <meta property="og:image" content="https://json.seanthorne.co.uk/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="json.seanthorne.co.uk: a formatted JSON document beside the words Format, check and explore JSON" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script>
+    // Sets the palette before first paint; App.vue takes over once mounted.
+    // json-palette holds the saved choice. With none, or "auto", a light OS gets
+    // Peach (0) and a dark one gets Night (2). bgs follow src/palettes.ts order.
+    (function () {
+      var bgs = ['#fff1e0', '#d6f5e3', '#14122b', '#ffd6e8', '#1a2fd0', '#e4dbff', '#0f2a20'];
+      var i = matchMedia('(prefers-color-scheme: dark)').matches ? 2 : 0;
+      try {
+        var saved = localStorage.getItem('json-palette');
+        if (saved !== null && saved !== 'auto' && bgs[Number(saved)]) i = Number(saved);
+      } catch (e) {}
+      document.documentElement.dataset.palette = i;
+      document.querySelector('meta[name="theme-color"]').content = bgs[i];
+    })();
+  </script>
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/martian-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+</head>
+<body class="min-h-dvh bg-bg font-sans text-body text-ink antialiased selection:bg-highlight">
+<div id="app"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
